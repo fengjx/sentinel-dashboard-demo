@@ -31,6 +31,7 @@ spring-boot(cloud) 整合 sentinel demo，包括官方 sentinel-dashboard 版本
 
 > 初始化数据在`sql`目录，apollo 初始数据已经设置了开放平台 token，如果是自己部署的 apollo 需要自己设置，参考：<https://www.apolloconfig.com/#/zh/usage/apollo-open-api-platform>
 
+> 如果是 mac m1，需求修改 `docker-compose.yml`，`image: mysql:5.7.39`修改为`image: arm64v8/mysql:oracle`
 
 ## 限流测试
 
