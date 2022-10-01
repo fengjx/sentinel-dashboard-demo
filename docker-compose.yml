@@ -1,0 +1,68 @@
+version: '3.7'
+
+services:
+
+  mysql:
+    # for arm
+    # image: arm64v8/mysql:oracle
+    image: mysql:5.7.39
+    container_name: mysql-demo
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: "1234"
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+
+  apollo:
+    image: fengjx/apollo-quick-start:2.0.1
+    container_name: apollo-demo
+    depends_on:
+      - mysql
+    ports:
+      - "7080:8080"
+      - "7070:8070"
+      - "7090:8090"
+    environment:
+      APOLLO_DB_HOST: "mysql-demo"
+      APOLLO_DB_PORT: "3306"
+      APOLLO_CONFIG_DB_USERNAME: "root"
+      APOLLO_CONFIG_DB_PASSWORD: "1234"
+      APOLLO_PORTAL_DB_USERNAME: "root"
+      APOLLO_PORTAL_DB_PASSWORD: "1234"
+
+  sentinel-dashboard-apollo:
+    image: fengjx/sentinel-dashboard-apollo:1.8.5
+    container_name: sentinel-dashboard-apollo
+    depends_on:
+      - apollo
+    ports:
+      - "6080:8080"
+    environment:
+      JAVA_OPTS: >
+        -Dlogging.level.com.alibaba.csp.sentinel=debug 
+        -Dserver.port=8080 
+        -Dapollo.sentinel.portalUrl=http://apollo-demo:8070 
+        -Dapollo.sentinel.token=183d39a00a46656063ab286830f71e023d24c454 
+        -Dapollo.sentinel.operator=apollo 
+        -Dapollo.sentinel.appId=sentinel-demo-server 
+        -Dapollo.sentinel.env=DEV 
+        -Dapollo.sentinel.namespace=sentinel-rule
+
+  demo-server:
+    image: sentinel-demo-server
+    container_name: demo-server
+    depends_on:
+      - sentinel-dashboard-apollo
+    ports:
+      - "8080:8080"
+    environment:
+      JAVA_OPTS: -Dspring.profiles.active=apollo
+
+networks:
+  default:
+    driver: bridge
+
