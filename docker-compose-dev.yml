@@ -35,7 +35,7 @@ services:
       APOLLO_PORTAL_DB_PASSWORD: "1234"
 
   sentinel-dashboard-apollo:
-    image: fengjx/sentinel-dashboard-apollo:1.8.6
+    image: fengjx/sentinel-dashboard-apollo:dev
     container_name: sentinel-dashboard-apollo
     depends_on:
       - apollo

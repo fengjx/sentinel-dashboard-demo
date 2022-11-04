@@ -40,6 +40,13 @@ start_dashboard_apollo() {
   sudo docker compose up -d
 }
 
+start_dashboard_apollo_dev() {
+  package
+  export DOCKER_SCAN_SUGGEST=false
+  sudo docker build -t sentinel-demo-server .
+  sudo docker compose -f docker-compose-dev.yml up -d
+}
+
 case_opt=$1
 shift
 
@@ -49,5 +56,8 @@ start_dashboard)
   ;;
 start_dashboard_apollo)
   start_dashboard_apollo "$@"
+  ;;
+start_dashboard_apollo_dev)
+  start_dashboard_apollo_dev "$@"
   ;;
 esac
