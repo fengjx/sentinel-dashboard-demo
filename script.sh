@@ -4,7 +4,7 @@
 
 DIST_DIR=.dist
 LOG_DIR=logs
-SENTINEL_DASHBOARD=1.8.5
+SENTINEL_DASHBOARD=1.8.6
 
 package() {
   if [ ! -f "${DIST_DIR}/app.jar" ]; then
@@ -20,7 +20,7 @@ start_dashboard() {
   package
   if [ ! -f "${DIST_DIR}/sentinel-dashboard.jar" ]; then
     echo '下载官方 sentinel-dashboard jar 包'
-    curl -L https://github.com/alibaba/Sentinel/releases/download/1.8.5/sentinel-dashboard-${SENTINEL_DASHBOARD}.jar \
+    curl -L https://github.com/alibaba/Sentinel/releases/download/${SENTINEL_DASHBOARD}/sentinel-dashboard-${SENTINEL_DASHBOARD}.jar \
       -o ${DIST_DIR}/sentinel-dashboard.jar
   fi
   mkdir -p "${LOG_DIR}"
