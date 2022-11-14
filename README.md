@@ -27,6 +27,7 @@ spring-boot(cloud) 整合 sentinel demo，包括官方 sentinel-dashboard 版本
 
 ```bash
 ./script.sh start_dashboard_apollo
+# apollo 后台：http://localhost:7070, 登录账号：apollo / admin
 ```
 
 > 初始化数据在`sql`目录，apollo 初始数据已经设置了开放平台 token，如果是自己部署的 apollo 需要自己设置，参考：<https://www.apolloconfig.com/#/zh/usage/apollo-open-api-platform>
