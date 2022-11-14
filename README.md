@@ -4,6 +4,8 @@ spring-boot(cloud) 整合 sentinel demo，包括官方 sentinel-dashboard 版本
 
 持久化定制版：<http://blog.fengjx.com/sentinel-dashboard-apollo/>
 
+视频说明：<https://www.bilibili.com/video/BV1Lv4y1m7cM/?vd_source=7e751fd947ed77bfed28e72cbde87e25>
+
 ## 官方版本 demo
 
 ```bash
