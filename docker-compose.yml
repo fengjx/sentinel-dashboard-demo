@@ -4,8 +4,8 @@ services:
 
   mysql:
     # for arm
-    image: arm64v8/mysql:oracle
-#    image: mysql:5.7.39
+    # image: arm64v8/mysql:oracle
+    image: mysql:5.7.39
     container_name: mysql-demo
     command: --default-authentication-plugin=mysql_native_password
     environment:
