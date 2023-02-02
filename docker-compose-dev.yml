@@ -17,11 +17,19 @@ services:
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
 
+  redis:
+    image: redis:6.2.10
+    container_name: redis-demo
+    ports:
+      - "6380:6379"
+    command: redis-server --save 60 1 --loglevel warning
+
   apollo:
     image: fengjx/apollo-quick-start:2.0.1
     container_name: apollo-demo
     depends_on:
       - mysql
+      - redis
     ports:
       - "7080:8080"
       - "7070:8070"
@@ -45,6 +53,10 @@ services:
       JAVA_OPTS: >
         -Dlogging.level.com.alibaba.csp.sentinel=debug 
         -Dserver.port=8080 
+        -Dmetric.store-type=redis
+        -Dspring.redis.host=redis-demo
+        -Dspring.redis.port=6379
+        -Drule.store.type=apollo
         -Dapollo.sentinel.portalUrl=http://apollo-demo:8070 
         -Dapollo.sentinel.token=183d39a00a46656063ab286830f71e023d24c454 
         -Dapollo.sentinel.operator=apollo 
